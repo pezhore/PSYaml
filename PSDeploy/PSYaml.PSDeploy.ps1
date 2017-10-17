@@ -1,17 +1,19 @@
 # Specify Module Name
 $ModuleName = "PSYaml"
 
-# Determine our installation path based on where "My Documents" is located
 $InstallPath = $env:PSModulePath.split(";") | Where-Object {$_ -match "My Documents" -or $_ -match "Documents"}
 
-# Specify deploy task
-Deploy "Install $ModuleName" {
+# Need to go from ModuleVersion = '1.0' to just 1.0
+$Version = (Get-Content (Join-Path $ModuleName "$ModuleName.psd1") | Where-Object {$_ -match "^ModuleVersion.*"})
+$Version = $Version.Split("=")[1].Trim()
+$Version = $Version.Replace("'","")
+
+Deploy "Install $ModuleName to $(Join-Path (Join-Path $InstallPath $ModuleName) $Version)" {
     By Filesystem {
         FromSource $ModuleName
-        To "$($InstallPath)\$($ModuleName)"
+        To (Join-Path (Join-Path $InstallPath $ModuleName) $Version)
         WithOptions @{
-                        # This overrides any existing content
-                        Mirror = $True
-                     }
+            Mirror = $True
+        }
     }
 }
