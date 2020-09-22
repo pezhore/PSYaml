@@ -24,7 +24,7 @@ Please note that the **Master** branch has the latest, ready-for-production vers
 ## Example Usage
 ```PowerShell
 import-module psyaml
-$yaml = @"
+$yamlString = @"
 anArray:
 - 1
 - 2
@@ -42,11 +42,12 @@ ConvertTo-YAML $YamlObject
 ```
 
 ## Contact Information
-Author: Phil-Factor, Brian Marsh
+Author: Phil-Factor (philipFactor@gmail.com)
 
 ## Release Notes
 |  Version  | Change Log                                                        |
 | :-------: | ----------------------------------------------------------------- |
+|  1.0.3    | Closed the open YAML file if error occurs in it during parsing    |
 |  1.0.2    | Reformated several sections for readability, added pester tests   |
 |  1.0.1    | Converted single psm1 file to multiple public/private functions   |
 
